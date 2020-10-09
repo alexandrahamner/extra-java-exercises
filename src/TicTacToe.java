@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -25,14 +26,13 @@ public class TicTacToe {
 
 //        Testing
         displayBoard(gameBoard);
-//        Testing
-//        updateBoard(9, 1, gameBoard);
         playerMove(gameBoard);
+        computerMove(gameBoard);
         playerMove(gameBoard);
-        playerMove(gameBoard);
-        playerMove(gameBoard);
+        computerMove(gameBoard);
     }
 
+// Prints out the game board.
     public static void displayBoard(char[][] gameBoard) {
         for (char[] row : gameBoard) {
             for (char c : row) {
@@ -42,6 +42,7 @@ public class TicTacToe {
         }
     }
 
+// Once a valid move is made, the board is updated.
     public static void updateBoard( int position, int player, char [][] gameBoard) {
         char character;
 
@@ -95,6 +96,7 @@ public class TicTacToe {
         }
     }
 
+// Determining the player's move by using Scanner to get their input.
     public static void playerMove(char [][] gameBoard) {
         System.out.println("Make a move! Choose a number between 1 - 9.");
         Scanner sc = new Scanner(System.in);
@@ -110,6 +112,23 @@ public class TicTacToe {
         updateBoard(move,1, gameBoard);
     }
 
+// Determining the computer's move by randomly generating a number.
+    public static void computerMove (char [][] gameBoard) {
+        Random randNumber = new Random();
+        int compMove = randNumber.nextInt(9)+1;
+        boolean result = isValid(compMove, gameBoard);
+
+        while(!result) {
+            compMove = randNumber.nextInt(9)+1;
+            result = isValid(compMove, gameBoard);
+        }
+
+        System.out.println("Computer moved at position " + compMove);
+        updateBoard(compMove, 2, gameBoard);
+
+    }
+
+// Method to check if the move the user or computer made is valid.
     public static boolean isValid(int move, char[][] gameBoard) {
         switch (move){
             case 1:
