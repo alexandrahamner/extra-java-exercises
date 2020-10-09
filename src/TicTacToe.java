@@ -24,9 +24,12 @@ public class TicTacToe {
         };
 
 //        Testing
-//        displayBoard(gameBoard);
+        displayBoard(gameBoard);
 //        Testing
 //        updateBoard(9, 1, gameBoard);
+        playerMove(gameBoard);
+        playerMove(gameBoard);
+        playerMove(gameBoard);
         playerMove(gameBoard);
     }
 
@@ -93,9 +96,42 @@ public class TicTacToe {
     }
 
     public static void playerMove(char [][] gameBoard) {
-        System.out.println("Make a move! Chose a number between 1 - 9.");
+        System.out.println("Make a move! Choose a number between 1 - 9.");
         Scanner sc = new Scanner(System.in);
         int move = sc.nextInt();
+        boolean result = isValid(move, gameBoard);
+
+        while (!result) {
+            System.out.println("Sorry, that spot is taken. Try again.");
+            move = sc.nextInt();
+            result = isValid(move, gameBoard);
+        }
+
         updateBoard(move,1, gameBoard);
+    }
+
+    public static boolean isValid(int move, char[][] gameBoard) {
+        switch (move){
+            case 1:
+                return gameBoard[0][0] == '_';
+            case 2:
+                return gameBoard[0][2] == '_';
+            case 3:
+                return gameBoard[0][4] == '_';
+            case 4:
+                return gameBoard[1][0] == '_';
+            case 5:
+                return gameBoard[1][2] == '_';
+            case 6:
+                return gameBoard[1][4] == '_';
+            case 7:
+                return gameBoard[2][0] == ' ';
+            case 8:
+                return gameBoard[2][2] == ' ';
+            case 9:
+                return gameBoard[2][4] == ' ';
+            default:
+                return false;
+        }
     }
 }
