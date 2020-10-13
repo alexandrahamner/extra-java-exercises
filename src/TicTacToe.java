@@ -7,15 +7,23 @@ public class TicTacToe {
         Build a command line Tic Tac Toe game.
         What the board should look like:
 
+Template for the gameBoard
+
           _ | _ | _
           _ | _ | _
             |   |
 
-         [0][0],[0][2],[0][4]
-         [1][0],[1][2],[1][4]
-         [2][0],[2][2],[2][4]
+The positions of the gameBoard
+
+         1 [0][0], 2 [0][2], 3 [0][4]
+         4 [1][0], 5 [1][2], 6 [1][4]
+         7 [2][0], 8 [2][2], 9 [2][4]
 
 */
+
+    static int playerScore = 0;
+    static int computerScore = 0;
+    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         char[][] gameBoard = {
@@ -23,16 +31,74 @@ public class TicTacToe {
                 {'_', '|', '_', '|', '_'},
                 {' ', '|', ' ', '|', ' '}
         };
+        displayBoard(gameBoard);
+        boolean gameOver = false;
+        boolean playAgain = true;
+
+        while(playAgain) {
+            while(!gameOver){
+                System.out.println("Tic Tac Toe");
+                playerMove(gameBoard);
+                gameOver = isGameOver(gameBoard);
+                if(gameOver) {
+                    break;
+                }
+
+                computerMove(gameBoard);
+                gameOver = isGameOver(gameBoard);
+                if (gameOver){
+                    break;
+                }
+            }
+        }
+        System.out.println("Player Score: " + playerScore);
+        System.out.println("Computer Score: " + computerScore);
+        System.out.println("Would you like to play again? [y/n] ");
+        sc.nextLine();
+        String userInput = sc.nextLine();
+
+        switch(userInput){
+            case "Y":
+            case "y":
+                playAgain = true;
+                System.out.println("Rematch!");
+                resetBoard(gameBoard);
+                gameOver = false;
+                displayBoard(gameBoard);
+                break;
+
+            case "N":
+            case "n":
+                playAgain = false;
+                System.out.println("Thank you for playing Tic Tac Toe!");
+                break;
+            default:
+                break;
+        }
+
+
 
 //        Testing
-        displayBoard(gameBoard);
-        playerMove(gameBoard);
-        computerMove(gameBoard);
-        playerMove(gameBoard);
-        computerMove(gameBoard);
+//        displayBoard(gameBoard);
+//        playerMove(gameBoard);
+//        computerMove(gameBoard);
+//        playerMove(gameBoard);
+//        computerMove(gameBoard);
     }
 
-// Prints out the game board.
+    public static void resetBoard(char[][] gameBoard) {
+        gameBoard[0][0] = '_';
+        gameBoard[0][2] = '_';
+        gameBoard[0][4] = '_';
+        gameBoard[1][0] = '_';
+        gameBoard[1][2] = '_';
+        gameBoard[1][4] = '_';
+        gameBoard[2][0] = ' ';
+        gameBoard[2][2] = ' ';
+        gameBoard[2][4] = ' ';
+    }
+
+    // Prints out the game board.
     public static void displayBoard(char[][] gameBoard) {
         for (char[] row : gameBoard) {
             for (char c : row) {
@@ -153,4 +219,6 @@ public class TicTacToe {
                 return false;
         }
     }
+
+
 }
